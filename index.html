@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Signup Modal - Day 20</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    
+    <header>
+        <h1>My Awesome Blog</h1>
+        <p>Welcome! Read amazing articles about Web Development.</p>
+    </header>
+
+    <main>
+        <div class="card">📝 Article 1 - How to Learn HTML in 7 Days</div>
+        <div class="card">🎨 Article 2 - CSS Tricks Everyone Should Know</div>
+        <div class="card">⚡ Article 3 - JavaScript for Beginners</div>
+        <p style="text-align:center; margin-top:20px; color:#666;">Wait for 3 seconds... A popup will appear!</p>
+    </main>
+
+    <!-- Newsletter Modal -->
+    <div id="overlay" class="overlay hidden">
+        <div class="modal">
+            <button id="closeBtn" class="close-btn">✖</button>
+            <h2>📩 Join Our Newsletter!</h2>
+            <p>Get latest coding tips every week. No spam!</p>
+            
+            <form id="newsletterForm">
+                <input type="email" id="emailInput" placeholder="Enter your email address">
+                <p id="errorMsg"></p>
+                <button type="submit" class="subscribe-btn">Subscribe Now</button>
+            </form>
+
+            <p id="successMsg" class="hidden">✅ Thank you! You are subscribed!</p>
+            <p class="small">We respect your privacy.</p>
+        </div>
+    </div>
+
+    <script>
+
+
+        
+const overlay = document.getElementById('overlay');
+const closeBtn = document.getElementById('closeBtn');
+const form = document.getElementById('newsletterForm');
+const emailInput = document.getElementById('emailInput');
+const errorMsg = document.getElementById('errorMsg');
+const successMsg = document.getElementById('successMsg');
+
+let isClosed = false; 
+
+
+setTimeout(() => {
+    if (!isClosed) {
+        overlay.classList.remove('hidden');
+    }
+}, 3000); 
+
+
+function closeModal() {
+    overlay.classList.add('hidden');
+    isClosed = true; // 
+}
+closeBtn.addEventListener('click', closeModal);
+
+
+overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) { 
+        closeModal();
+    }
+});
+
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+
+    if (email === '') {
+        errorMsg.textContent = 'Please enter your email!';
+        return;
+    }
+    if (!email.includes('@') || !email.includes('.')) {
+        errorMsg.textContent = 'Please enter a valid email! e.g abc@gmail.com';
+        return;
+    }
+
+    // Sab sahi hai
+    errorMsg.textContent = '';
+    form.classList.add('hidden');
+    successMsg.classList.remove('hidden');
+    isClosed = true;
+
+    
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+    }, 2000);
+});
+    </script>
+</body>
+</html>
